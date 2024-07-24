@@ -121,14 +121,6 @@ const PricingComponent = () => {
         />
       </InputContainer>
       <InputContainer>
-        <Label>Kar Oranı (%)</Label>
-        <Input
-          type="number"
-          value={profitMargin}
-          onChange={(e) => setProfitMargin(Number(e.target.value))}
-        />
-      </InputContainer>
-      <InputContainer>
         <Label>Kargo Ücreti</Label>
         <Input
           type="number"
@@ -136,6 +128,15 @@ const PricingComponent = () => {
           onChange={(e) => setShippingFee(Number(e.target.value))}
         />
       </InputContainer>
+      <InputContainer>
+        <Label>Kar Oranı (%)</Label>
+        <Input
+          type="number"
+          value={profitMargin}
+          onChange={(e) => setProfitMargin(Number(e.target.value))}
+        />
+      </InputContainer>
+
       <InputContainer>
         <Label>Pazaryeri Seçimi</Label>
         <Select onChange={handleMarketplaceChange}>
