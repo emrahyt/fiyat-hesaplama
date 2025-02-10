@@ -99,25 +99,20 @@ const NavLink = styled.div`
   }
 `;
 
-const PricingComponent = () => {
+const SecondPageScreen = () => {
   const [price, setPrice] = useState("");
   const [shippingFee, setShippingFee] = useState(75);
   const [profitMargin, setProfitMargin] = useState(20);
-  const [marketplaceFee, setMarketplaceFee] = useState(14);
-  const [commission, setCommission] = useState(0);
   const [finalPrice, setFinalPrice] = useState(0);
-
-  const handleMarketplaceChange = ({ target }) =>
-    setMarketplaceFee(target.value);
+  console.log("🚀 ~ SecondPageScreen ~ finalPrice:", finalPrice);
 
   useEffect(() => {
-    if (!price) return;
+    if (!price || !shippingFee || !profitMargin) {
+      setFinalPrice(0);
+    }
     const subPrice = price * (1 + profitMargin / 100) + shippingFee;
-    const totalPrice = subPrice / (1 - marketplaceFee / 100);
-    const commissionValue = totalPrice - subPrice;
-    setCommission(commissionValue);
-    setFinalPrice(totalPrice);
-  }, [price, shippingFee, profitMargin, marketplaceFee]);
+    subPrice ? setFinalPrice(subPrice) : setFinalPrice(0);
+  }, [price, shippingFee, profitMargin]);
 
   return (
     <Container>
@@ -133,16 +128,6 @@ const PricingComponent = () => {
         />
       </InputContainer>
       <InputContainer>
-        <Label>Kargo Ücreti</Label>
-        <Input
-          type="number"
-          value={shippingFee}
-          onChange={(e) =>
-            setShippingFee(e.target.value === "" ? "" : Number(e.target.value))
-          }
-        />
-      </InputContainer>
-      <InputContainer>
         <Label>Kar Oranı (%)</Label>
         <Input
           type="number"
@@ -152,23 +137,22 @@ const PricingComponent = () => {
           }
         />
       </InputContainer>
-
       <InputContainer>
-        <Label>Pazaryeri Seçimi</Label>
-        <Select onChange={handleMarketplaceChange}>
-          <option value={14}>Trendyol (14%)</option>
-          <option value={20}>Hepsiburada (20%)</option>
-        </Select>
+        <Label>Kargo Ücreti</Label>
+        <Input
+          type="number"
+          value={shippingFee}
+          onChange={(e) =>
+            setShippingFee(e.target.value === "" ? "" : Number(e.target.value))
+          }
+        />
       </InputContainer>
-      <Result>
-        Pazaryeri Komisyonu: {parseInt(commission)?.toFixed(2)} TL
-      </Result>
       <Result>Son Fiyat: {parseInt(finalPrice)?.toFixed(2)} TL</Result>
       <NavLink>
-        <Link href="/second-page">İkinci Sayfaya Git</Link>
+        <Link href="/">İlk Sayfaya Git</Link>
       </NavLink>
     </Container>
   );
 };
 
-export default PricingComponent;
+export default SecondPageScreen;
